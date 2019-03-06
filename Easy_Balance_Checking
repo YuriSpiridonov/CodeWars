@@ -1,0 +1,78 @@
+# https://www.codewars.com/kata/easy-balance-checking/train/python
+
+import re
+from decimal import Decimal
+def balance(book):
+    i=1
+    book=book.rstrip()
+    book=book.strip('\n')
+    line = book.splitlines()
+    booklist = list()
+    for i in range(len(line)):
+        try:
+            if len(line[i]) ==0:
+                line.pop(i)
+                continue
+        except:
+            break
+    for i in range(len(line)):
+        book1 = re.sub('[^A-Za-z0-9.]+', ' ', line[i])
+        book1=book1.rstrip()
+        booklist.append(book1)
+    balanceval = round(Decimal(booklist[0]),2)
+    avecount=0
+    ave=0
+    ret= str()
+    for i in range(len(booklist)):
+        booklist[i] = booklist[i].split()
+        for x in range(len(booklist[i])):
+            if booklist[i][x].isalnum():
+                continue      
+            else:
+                booklist[i].insert(x,round(Decimal(booklist[i][x]),2))
+                booklist[i].pop(x+1)
+    #Balance and Ave
+                if i>0 and x>0:
+                    booklist[i].append('Balance')
+                    booklist[i].append(round(Decimal(balanceval-booklist[i][x]),2))
+                    balanceval = Decimal(balanceval-booklist[i][x])
+                    ave =  ave + booklist[i][2]
+                    avecount+=1   
+                else:
+                    continue
+    booklistBa = list()
+    booklistAve = list()
+    booklistBa.append('Total expense ')
+    booklistBa.append(round(Decimal(Decimal(booklist[0][0])-Decimal(booklist[-1][4])),2))
+    booklistAve.append('Average expense ')
+    booklistAve.append(round(Decimal(ave/avecount),2))            
+    ind = 0
+    returnstring = 'Original Balance: '+ str(round(Decimal(booklist[0][0]),2)) +'\r\n'
+    for ind in range(len(booklist)):
+        if len(booklist[ind]) >1:
+            ret = ' '.join(str(words) for words in booklist[ind])
+            returnstring = returnstring + ret +'\r\n'
+        ind+=1
+        continue
+    Ba = ' '.join(str(words) for words in booklistBa)
+    Ave = ' '.join(str(words) for words in booklistAve)
+    returnstring = returnstring + Ba + '\r\n' + Ave + '' 
+        
+    return returnstring    
+        
+    
+b1 = """1233.00
+125 Hardware;! 24.8?;
+123 Flowers 93.5
+127 Meat 120.90
+120 Picture 34.00
+124 Gasoline 11.00
+123 Photos;! 71.4?;
+122 Picture 93.5
+132 Tyres;! 19.00,?;
+129 Stamps 13.6
+129 Fruits{} 17.6
+129 Market;! 128.00?;
+121 Gasoline;! 13.6?;"""
+
+print(balance(b1))
