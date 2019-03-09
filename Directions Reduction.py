@@ -2,23 +2,23 @@
 # WRONG SOLUTION 
 
 def dirReduc(arr):
-    print(arr)
-    while True:
-        if  "SOUTH" not in arr or "NORTH" not in arr:
-            break
-        else:    
-            if arr.index("NORTH")+1 == arr.index("SOUTH") or arr.index("SOUTH")+1 == arr.index("NORTH"):
-                arr.pop(arr.index("NORTH"))
-                arr.pop(arr.index("SOUTH"))
-            else:
-                break
-            
-        if "WEST" not in arr or "EAST" not in arr:
-            break
+    lst = list()
+    for i, j in zip(arr[:-1],arr[1:]):
+        if i == j:
+            pass
         else:
-            if arr.index("WEST")+1 == arr.index("EAST") or arr.index("EAST")+1 == arr.index("WEST"):
-                arr.pop(arr.index("WEST"))
-                arr.pop(arr.index("EAST"))
-            else:
-                break
-    return arr
+            if  "SOUTH" not in arr or "NORTH" not in arr:
+                pass
+            elif i == 'NORTH' and j == 'SOUTH' or i == 'SOUTH' and j == 'NORTH':
+                arr.remove(i)
+                arr.remove(j)
+                continue
+            if "WEST" not in arr or "EAST" not in arr:
+                pass
+            elif i == 'EAST' and j == 'WEST' or i == 'WEST' and j == 'EAST':
+                arr.remove(i)
+                arr.remove(j)
+                continue
+    return arr   
+
+print(dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]))   
