@@ -1,5 +1,5 @@
 # https://www.codewars.com/kata/ease-the-stockbroker/train/python
-# IN PROGRESS lots of issues, doing everything wrong
+# every test passed but error 1 on site may be coz it for py2.7 and not available for py3.6+ and i didnt see it
 import re
 
 def balance_statement(lst):
