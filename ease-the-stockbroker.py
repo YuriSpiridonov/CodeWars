@@ -15,8 +15,12 @@ def balance_statement(lst):
     # my try re for it [1] only digits [2] digits with a dot . then convert it to int and float
     
     for i in range(len(lst2)):
-        lst2[i].insert(2, int(lst2[i][1]))
-        lst2[i].pop(1)
+        if lst2[i][1].isdigit(): # digit check for [1] 
+            lst2[i].insert(2, int(lst2[i][1]))
+            lst2[i].pop(1)
+        else:
+            badFormat.append(lst2[i])
+        #??? check str for float digit     
         lst2[i].insert(3, float(lst2[i][2]))
         lst2[i].pop(2)
         if len(lst2[i]) < 4:
