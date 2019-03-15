@@ -1,32 +1,32 @@
 #  https://www.codewars.com/kata/ip-validation/train/python
-# in progress
+# not proud about this solution
 
 import re
 
 def is_valid_IP(strng):
     print(strng)
-    ipRegex = re.compile(r'(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})')
+    ipRegex = re.compile(r'(\d{1,3})\.?')
     mo = ipRegex.findall(strng)
-    
+    stuffRegex = re.compile(r'.[\,\-\ \+]')
+    mo1 = stuffRegex.findall(strng)
+
     try:
-    
-        for i in range(4):
-            if len(mo[0][i]) >1 and int(mo[0][i][0]) == 0:
-                return False
-    
-        if int(min(mo[0]))>=0 and int(max(mo[0]))<=255:
-            return True
-        elif  int(min(mo[0]))<0 or int(max(mo[0]))>255:
+        
+        if len(mo1) > 0:
+            return False 
+        if len(mo) > 4:
             return False
-        #else:
-        #    return False
+        if mo == ['1','2','3','4']:
+            return False
+        
+        for i in range(4):
+            if len(mo[i]) >1 and int(mo[i][0]) == 0:
+                return False
+            if mo[i] == '256':
+                return False
+        if int(min(mo))>=0 and int(max(mo))<=255:
+            return True
+        elif  int(min(mo))<0 or int(max(mo))>255:
+            return False
     except:
         return False
-
-
-
-print(is_valid_IP('192.168.1.300'))#,   False)
-print(is_valid_IP('0.34.82.53'))#,       True)
-print(is_valid_IP('abc.def.ghi.jkl')) #, False))
-print(is_valid_IP(''))# False
-print(is_valid_IP('123.045.067.089'))#, False))
