@@ -1,20 +1,27 @@
-# https://www.codewars.com/kata/find-the-word-pair/train/python
-# Max Buffer Size Reached (1.5 MiB)
+# https://www.codewars.com/kata/find-the-word-pair/train/python 
+# Timeout 12sec
 
 def compound_match(words, target):
-    print(words)
     wordList = list()
     positionList = list()
-    for word1 in words:
-        for word2 in words:    
-            if target.startswith(word1) is True and target.endswith(word2) and len(word1+word2) == len(target):
-                if words.index(word1) < words.index(word2):
-                    wordList.append(word1)
-                    wordList.append(word2)
+    for word in words:
+        if target.startswith(word):
+            temp = word
+            for word in words:
+                if len(wordList) < 1:
+                    if target.endswith(word) and len(temp+word) == len(target) and len(wordList) < 2:
+                        positionList.insert(0,words.index(temp))
+                        positionList.insert(1,words.index(word))
+                        if words.index(temp) < words.index(word):
+                            wordList.append(temp)
+                            wordList.append(word)
+                        else:
+                            wordList.append(word)
+                            wordList.append(temp)
                 else:
-                    wordList.append(word2)
-                    wordList.append(word1)
-                positionList.insert(0,words.index(word1))
-                positionList.insert(1,words.index(word2))
-                wordList.append(positionList)            
-                return wordList
+                    break
+    wordList.append(positionList)
+    if len(wordList) > 1:
+        return wordList
+    else:
+        return None
