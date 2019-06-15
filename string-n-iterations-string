@@ -1,12 +1,15 @@
 # https://www.codewars.com/kata/string-%3E-n-iterations-%3E-string/train/python
-# pass simple test and fail with huge numbers
 
 def jumbled_string(s, n):
-    if n:
-        while counter != n:
-            s = s[::2]+s[1::2]
-            counter += 1
-        return s
+    counter = 1
+    count = 0
+    control_s = s
     s = s[::2]+s[1::2]
-            
-    return s   
+    while s != control_s:
+        s = s[::2]+s[1::2]
+        counter += 1   
+    n -= (n//counter)*counter
+    while count != n:
+        s = s[::2]+s[1::2]
+        count += 1
+    return s
